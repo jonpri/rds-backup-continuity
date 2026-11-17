@@ -76,18 +76,6 @@ def create_snapshot_for_db(rds, db_id, account, operation_id):
             operation_id=operation_id,
         )
 
-        # Espera a que el snapshot sea visible antes de etiquetarlo
-        time.sleep(3)
-        snapshot_info = rds.describe_db_snapshots(DBSnapshotIdentifier=snapshot_id)["DBSnapshots"][0]
-        snapshot_arn = snapshot_info["DBSnapshotArn"]
-
-        # Etiqueta el snapshot creado
-        rds.add_tags_to_resource(
-            ResourceName=snapshot_arn,
-            Tags=tags
-        )
-        log_with_context(f"Etiquetas agregadas a: {snapshot_id}", step="tag_snapshot")
-
     except ClientError as e:
         code = e.response.get("Error", {}).get("Code")
         if code == "InvalidDBInstanceState":
