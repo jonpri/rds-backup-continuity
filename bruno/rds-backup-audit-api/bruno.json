@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "RDS Backup Audit API",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

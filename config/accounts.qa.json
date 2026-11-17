@@ -1,0 +1,26 @@
+{
+  "default_retention_days": 7,
+  "accounts": {
+    "210000000001": {
+      "account_name": "app-a",
+      "enabled": true,
+      "backup_enabled": true,
+      "retention_enabled": true,
+      "retention_days": 3
+    },
+    "210000000002": {
+      "account_name": "app-b",
+      "enabled": true,
+      "backup_enabled": true,
+      "retention_enabled": true,
+      "retention_days": 3
+    },
+    "210000000003": {
+      "account_name": "app-c",
+      "enabled": true,
+      "backup_enabled": true,
+      "retention_enabled": true,
+      "retention_days": 3
+    }
+  }
+}

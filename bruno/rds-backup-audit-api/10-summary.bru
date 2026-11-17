@@ -1,0 +1,21 @@
+meta {
+  name: 10 Summary
+  type: http
+  seq: 10
+}
+
+get {
+  url: {{baseUrl}}/audit/summary
+  body: none
+  auth: none
+}
+
+headers {
+  x-api-key: {{apiKey}}
+}
+
+params:query {
+  account_name: {{accountName}}
+  from: {{fromUtc}}
+  to: {{toUtc}}
+}

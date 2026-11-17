@@ -1,0 +1,22 @@
+meta {
+  name: 13 Events Account
+  type: http
+  seq: 13
+}
+
+get {
+  url: {{baseUrl}}/audit/events/{{accountName}}
+  body: none
+  auth: none
+}
+
+headers {
+  x-api-key: {{apiKey}}
+}
+
+params:query {
+  from: {{fromUtc}}
+  to: {{toUtc}}
+  limit: {{limit}}
+  next_token: {{nextToken}}
+}

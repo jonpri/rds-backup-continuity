@@ -1,0 +1,20 @@
+meta {
+  name: RDS Backup Audit API
+  type: collection
+  seq: 1
+}
+
+docs {
+  # RDS Backup Audit API
+
+  Coleccion para consultar eventos y estado de backups/retention RDS.
+
+  Configura el ambiente QA con:
+
+  - `baseUrl`: URL del stage API Gateway, por ejemplo `https://abc.execute-api.us-east-1.amazonaws.com/qa`
+  - `apiKey`: valor de la API key
+  - `accountName`: alias de cuenta, por ejemplo `app-a`, `app-b` o `app-c`
+  - `accountId`: id AWS de la cuenta
+  - `region`: region RDS consultada
+  - `dbIdentifier`: identificador de la base RDS
+}

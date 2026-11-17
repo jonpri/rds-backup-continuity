@@ -1,0 +1,20 @@
+meta {
+  name: 05 Diagnostics Restore Candidates
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/audit/diagnostics/restore-candidates/{{accountName}}/{{region}}/{{dbIdentifier}}
+  body: none
+  auth: none
+}
+
+headers {
+  x-api-key: {{apiKey}}
+}
+
+params:query {
+  from: {{fromUtc}}
+  to: {{toUtc}}
+}

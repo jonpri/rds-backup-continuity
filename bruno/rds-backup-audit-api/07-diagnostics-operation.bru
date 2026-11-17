@@ -1,0 +1,15 @@
+meta {
+  name: 07 Diagnostics Operation
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{baseUrl}}/audit/diagnostics/operation/{{operationId}}
+  body: none
+  auth: none
+}
+
+headers {
+  x-api-key: {{apiKey}}
+}

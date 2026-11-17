@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" font-family="DejaVu Sans, Arial, sans-serif">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <marker id="ahr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#DD344C"/>
+    </marker>
+    <style>
+      .box { fill:#ffffff; stroke:#CBD5E1; stroke-width:1.5; }
+      .t { font-size:18px; font-weight:bold; fill:#0F172A; }
+      .s { font-size:15px; fill:#475569; }
+      .lbl { font-size:14px; fill:#475569; }
+      .edge { stroke:#475569; stroke-width:2; fill:none; marker-end:url(#ah); }
+      .panelTitle { font-size:22px; font-weight:bold; fill:#0F172A; }
+      .panelSub { font-size:15px; fill:#64748B; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1000" fill="#ffffff"/>
+  <text x="40" y="52" font-size="28" font-weight="bold" fill="#0F172A">RDS Backup Continuity · arquitectura</text>
+
+  <!-- Cuenta central -->
+  <rect x="40" y="80" width="880" height="890" rx="16" fill="#F8FAFC" stroke="#94A3B8" stroke-width="2"/>
+  <text x="68" y="118" class="panelTitle">Cuenta central</text>
+  <text x="68" y="143" class="panelSub">AWS CDK (Python) · 6 stacks</text>
+
+  <!-- Schedulers -->
+  <rect x="80" y="160" width="250" height="100" rx="10" class="box"/><rect x="80" y="160" width="8" height="100" rx="4" fill="#E7157B"/>
+  <text x="210" y="198" class="t" text-anchor="middle">EventBridge Scheduler</text>
+  <text x="210" y="222" class="s" text-anchor="middle">Backup · 12:00 y 16:00</text>
+  <text x="210" y="243" class="s" text-anchor="middle">America/Santiago</text>
+
+  <rect x="80" y="440" width="250" height="100" rx="10" class="box"/><rect x="80" y="440" width="8" height="100" rx="4" fill="#E7157B"/>
+  <text x="210" y="478" class="t" text-anchor="middle">EventBridge Scheduler</text>
+  <text x="210" y="502" class="s" text-anchor="middle">Retención · 00:00</text>
+  <text x="210" y="523" class="s" text-anchor="middle">America/Santiago</text>
+
+  <!-- SSM -->
+  <rect x="80" y="300" width="250" height="100" rx="10" class="box"/><rect x="80" y="300" width="8" height="100" rx="4" fill="#E7157B"/>
+  <text x="210" y="338" class="t" text-anchor="middle">SSM Parameter Store</text>
+  <text x="210" y="362" class="s" text-anchor="middle">/rds-backup/config</text>
+  <text x="210" y="383" class="s" text-anchor="middle">cuentas y retención</text>
+
+  <!-- Grupo Lambdas -->
+  <rect x="385" y="140" width="300" height="445" rx="14" fill="#FFF7ED" stroke="#ED7100" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text x="535" y="572" class="lbl" text-anchor="middle">Python 3.12 · Lambda Powertools</text>
+
+  <rect x="410" y="160" width="250" height="100" rx="10" class="box"/><rect x="410" y="160" width="8" height="100" rx="4" fill="#ED7100"/>
+  <text x="540" y="198" class="t" text-anchor="middle">Lambda backup</text>
+  <text x="540" y="222" class="s" text-anchor="middle">rds-backup-runner</text>
+  <text x="540" y="243" class="s" text-anchor="middle">crea snapshots administrados</text>
+
+  <rect x="410" y="440" width="250" height="100" rx="10" class="box"/><rect x="410" y="440" width="8" height="100" rx="4" fill="#ED7100"/>
+  <text x="540" y="478" class="t" text-anchor="middle">Lambda retención</text>
+  <text x="540" y="502" class="s" text-anchor="middle">rds-backup-retention</text>
+  <text x="540" y="523" class="s" text-anchor="middle">borra solo lo administrado</text>
+
+  <!-- scheduler -> lambda, ssm -> group -->
+  <path d="M330,210 L408,210" class="edge"/>
+  <path d="M330,490 L408,490" class="edge"/>
+  <path d="M330,350 L383,350" class="edge"/>
+  <text x="357" y="340" class="lbl" text-anchor="middle">lee</text>
+
+  <!-- bus to stores -->
+  <path d="M535,585 L535,615" stroke="#475569" stroke-width="2"/>
+  <path d="M205,615 L775,615" stroke="#475569" stroke-width="2"/>
+  <path d="M205,615 L205,648" class="edge"/>
+  <path d="M480,615 L480,648" class="edge"/>
+  <path d="M775,615 L775,648" class="edge"/>
+  <text x="550" y="607" class="lbl">eventos · estado · métricas</text>
+
+  <!-- Stores -->
+  <rect x="80" y="650" width="250" height="100" rx="10" class="box"/><rect x="80" y="650" width="8" height="100" rx="4" fill="#C925D1"/>
+  <text x="210" y="688" class="t" text-anchor="middle">DynamoDB</text>
+  <text x="210" y="712" class="s" text-anchor="middle">audit-events</text>
+  <text x="210" y="733" class="s" text-anchor="middle">historial · PITR</text>
+
+  <rect x="355" y="650" width="250" height="100" rx="10" class="box"/><rect x="355" y="650" width="8" height="100" rx="4" fill="#C925D1"/>
+  <text x="485" y="688" class="t" text-anchor="middle">DynamoDB</text>
+  <text x="485" y="712" class="s" text-anchor="middle">audit-state</text>
+  <text x="485" y="733" class="s" text-anchor="middle">estado actual por DB</text>
+
+  <rect x="640" y="650" width="250" height="100" rx="10" class="box"/><rect x="640" y="650" width="8" height="100" rx="4" fill="#E7157B"/>
+  <text x="770" y="688" class="t" text-anchor="middle">CloudWatch</text>
+  <text x="770" y="712" class="s" text-anchor="middle">métricas EMF · logs JSON</text>
+  <text x="770" y="733" class="s" text-anchor="middle">dashboard operacional</text>
+
+  <!-- API -->
+  <rect x="80" y="840" width="525" height="100" rx="10" class="box"/><rect x="80" y="840" width="8" height="100" rx="4" fill="#E7157B"/>
+  <text x="342" y="878" class="t" text-anchor="middle">API Gateway + Lambda audit-api</text>
+  <text x="342" y="902" class="s" text-anchor="middle">solo lectura · API key</text>
+  <text x="342" y="923" class="s" text-anchor="middle">summary · state · events · diagnostics</text>
+  <path d="M205,838 L205,752" class="edge"/>
+  <path d="M480,838 L480,752" class="edge"/>
+  <text x="215" y="800" class="lbl">consulta</text>
+
+  <rect x="660" y="840" width="230" height="100" rx="10" fill="#ffffff" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text x="775" y="882" class="t" text-anchor="middle">Consumidores</text>
+  <text x="775" y="908" class="s" text-anchor="middle">tableros · scripts · agentes</text>
+  <path d="M658,890 L607,890" class="edge"/>
+
+  <!-- Cuentas administradas (apiladas) -->
+  <rect x="996" y="96" width="580" height="874" rx="16" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.5"/>
+  <rect x="988" y="88" width="580" height="874" rx="16" fill="#F5F7FA" stroke="#CBD5E1" stroke-width="1.5"/>
+  <rect x="980" y="80" width="580" height="874" rx="16" fill="#F8FAFC" stroke="#94A3B8" stroke-width="2"/>
+  <text x="1008" y="118" class="panelTitle">Cuentas administradas</text>
+  <text x="1008" y="143" class="panelSub">un rol por cuenta · sin AWS Organizations</text>
+
+  <!-- AssumeRole edge -->
+  <path d="M660,210 L720,210 L800,350" stroke="#DD344C" stroke-width="2.5" fill="none"/>
+  <path d="M660,490 L720,490 L800,350" stroke="#DD344C" stroke-width="2.5" fill="none"/>
+  <path d="M800,350 L1028,350" stroke="#DD344C" stroke-width="2.5" fill="none" marker-end="url(#ahr)"/>
+  <circle cx="800" cy="350" r="4" fill="#DD344C"/>
+  <text x="895" y="330" paint-order="stroke" stroke="#ffffff" stroke-width="5" stroke-linejoin="round" font-size="15" font-weight="bold" fill="#DD344C" text-anchor="middle">sts:AssumeRole</text>
+  <text x="895" y="378" paint-order="stroke" stroke="#ffffff" stroke-width="5" stroke-linejoin="round" font-size="14" fill="#DD344C" text-anchor="middle">+ ExternalId</text>
+  <text x="895" y="398" paint-order="stroke" stroke="#ffffff" stroke-width="5" stroke-linejoin="round" font-size="13" fill="#DD344C" text-anchor="middle">mismo rol para ambas</text>
+
+  <rect x="1030" y="290" width="480" height="120" rx="10" class="box"/><rect x="1030" y="290" width="8" height="120" rx="4" fill="#DD344C"/>
+  <text x="1270" y="328" class="t" text-anchor="middle">IAM Role · RdsBackupCrossAccountRole</text>
+  <text x="1270" y="354" class="s" text-anchor="middle">confía en la cuenta central</text>
+  <text x="1270" y="376" class="s" text-anchor="middle">exige ExternalId · restringe por aws:PrincipalArn</text>
+  <text x="1270" y="398" class="s" text-anchor="middle">permisos RDS mínimos</text>
+
+  <path d="M1270,410 L1270,458" class="edge"/>
+
+  <rect x="1030" y="460" width="480" height="90" rx="10" class="box"/><rect x="1030" y="460" width="8" height="90" rx="4" fill="#C925D1"/>
+  <text x="1270" y="498" class="t" text-anchor="middle">Amazon RDS</text>
+  <text x="1270" y="524" class="s" text-anchor="middle">instancias de base de datos</text>
+
+  <path d="M1270,550 L1270,598" class="edge"/>
+
+  <rect x="1030" y="600" width="480" height="320" rx="10" class="box"/><rect x="1030" y="600" width="8" height="320" rx="4" fill="#C925D1"/>
+  <text x="1270" y="638" class="t" text-anchor="middle">Snapshots manuales</text>
+
+  <rect x="1055" y="660" width="210" height="235" rx="8" fill="#ECFDF5" stroke="#10B981" stroke-width="1.5"/>
+  <text x="1160" y="690" font-size="16" font-weight="bold" fill="#047857" text-anchor="middle">Administrados</text>
+  <rect x="1067" y="705" width="186" height="28" rx="14" fill="#ffffff" stroke="#10B981"/>
+  <text x="1160" y="724" font-size="11.5" fill="#047857" text-anchor="middle">CreatedBy=RdsBackupLambda</text>
+  <rect x="1067" y="741" width="186" height="28" rx="14" fill="#ffffff" stroke="#10B981"/>
+  <text x="1160" y="760" font-size="12.5" fill="#047857" text-anchor="middle">Service=RdsBackup</text>
+  <text x="1160" y="800" class="s" text-anchor="middle">se borran al vencer</text>
+  <text x="1160" y="822" class="s" text-anchor="middle">retention_days</text>
+  <text x="1160" y="858" font-size="13" fill="#047857" text-anchor="middle">salvo keep=true</text>
+
+  <rect x="1280" y="660" width="210" height="235" rx="8" fill="#F1F5F9" stroke="#64748B" stroke-width="1.5"/>
+  <text x="1385" y="690" font-size="16" font-weight="bold" fill="#334155" text-anchor="middle">No administrados</text>
+  <text x="1385" y="725" class="s" text-anchor="middle">sin los dos tags</text>
+  <text x="1385" y="747" class="s" text-anchor="middle">(creados a mano u</text>
+  <text x="1385" y="769" class="s" text-anchor="middle">otros procesos)</text>
+  <text x="1385" y="812" font-size="16" font-weight="bold" fill="#334155" text-anchor="middle">nunca se borran</text>
+  <text x="1385" y="834" font-size="16" font-weight="bold" fill="#334155" text-anchor="middle">automáticamente</text>
+  <text x="1385" y="862" class="s" text-anchor="middle">solo se auditan</text>
+</svg>
